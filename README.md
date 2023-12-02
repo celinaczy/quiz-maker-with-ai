@@ -11,7 +11,7 @@ To run the program you'll need Python and the following packages installed:
 
 ## OpenAI API key 
 Unfortunately, the project is based on a paid service provided by OpenAI so setting up an account at https://platform.openai.com/ and getting an API key is required. 
-Once you generate your API key save it as an environment variable OPENAI_API_KEY
+Once you generate your API key save it as an environment variable `OPENAI_API_KEY`
 
 # Use 
 The program takes a list of vocabulary items (as a txt file) and creates two csv files: 

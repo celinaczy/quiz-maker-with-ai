@@ -1,29 +1,29 @@
-import nltk
-import csv
 import random
-import re
 import openai
-import time
 import os
 
 openai.api_key = os.environ.get('OPENAI_API_KEY')
 
 
 # convert txt files to python lists
+# def txt_to_list(filename):
+#     # opening the file in read mode
+#     my_file = open(filename, "r")
+#
+#     # reading the file
+#     data = my_file.read()
+#
+#     # replacing end splitting the text
+#     # when newline ('\n') is seen.
+#     data_into_list = data.split("\n")
+#     data_into_list = [word.lower() for word in data_into_list]
+#
+#     my_file.close()
+#     return data_into_list
+
 def txt_to_list(filename):
-    # opening the file in read mode
-    my_file = open(filename, "r")
-
-    # reading the file
-    data = my_file.read()
-
-    # replacing end splitting the text 
-    # when newline ('\n') is seen.
-    data_into_list = data.split("\n")
-    data_into_list = [word.lower() for word in data_into_list]
-
-    my_file.close()
-    return data_into_list
+    with open(filename, "r") as my_file:
+        return [word.lower() for word in my_file.read().split("\n")]
 
 
 # common-words.txt contains 10.000 most common words in English (MIT license)
@@ -33,6 +33,7 @@ common_words = txt_to_list('common-words.txt.txt')
 def gap_fill_sents(filename):
     vocab_list = txt_to_list(filename)
     sample_sentence = 'Provide a sample sentence with the word '
+
     gap_fill_sents = {}
     # time.sleep(30)
     for word in vocab_list:
@@ -62,22 +63,15 @@ def gap_fill_sents(filename):
 
 
 mydict = gap_fill_sents('financial-crimes.txt')
-
+print(mydict)
 
 # returns n random words to test
 def test_set(mydict, word_number=10):
     keys = list(mydict.keys())
-    # remove keys which are more than one word
-    # to be improved later
-    for key in keys:
-        if " " in key:
-            keys.remove(key)
     randomlist = random.sample(range(len(keys)), word_number)
     randomkeys = []
     for i in randomlist:
         randomkeys += [keys[i]]
-    # for i in range(len(randomkeys)-1):
-    #    randomkeys[i] = lemmatizer.lemmatize(randomkeys[i])
     return randomkeys
 
 
@@ -149,4 +143,4 @@ def questions_set(mydict, questions_number=10, o_number=4, seconds_number=20):
     return questions
 
 
-questions_set(mydict,3)
+# questions_set(mydict,10)

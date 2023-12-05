@@ -8,7 +8,7 @@ I wrote it to speed up the process of creating quizzes for my students on kahoot
 2. Navigate to the project directory: `cd quiz-maker-with-ai`
 3. Install required dependencies: `pip install -r requirements.txt`
 
-## OpenAI API key 
+### OpenAI API key 
 Unfortunately, the project is based on a paid service provided by OpenAI so setting up an account at https://platform.openai.com/ and getting an API key is required. 
 Once you generate your API key save it as an environment variable `OPENAI_API_KEY`
 

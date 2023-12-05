@@ -4,27 +4,9 @@ import os
 
 openai.api_key = os.environ.get('OPENAI_API_KEY')
 
-
-# convert txt files to python lists
-# def txt_to_list(filename):
-#     # opening the file in read mode
-#     my_file = open(filename, "r")
-#
-#     # reading the file
-#     data = my_file.read()
-#
-#     # replacing end splitting the text
-#     # when newline ('\n') is seen.
-#     data_into_list = data.split("\n")
-#     data_into_list = [word.lower() for word in data_into_list]
-#
-#     my_file.close()
-#     return data_into_list
-
 def txt_to_list(filename):
     with open(filename, "r") as my_file:
         return [word.lower() for word in my_file.read().split("\n")]
-
 
 # common-words.txt contains 10.000 most common words in English (MIT license)
 common_words = txt_to_list('common-words.txt.txt')
@@ -35,7 +17,7 @@ def gap_fill_sents(filename):
     sample_sentence = 'Provide a sample sentence with the word '
 
     gap_fill_sents = {}
-    # time.sleep(30)
+
     for word in vocab_list:
         if word.endswith('ing'):
             completion = openai.chat.completions.create(
@@ -50,20 +32,22 @@ def gap_fill_sents(filename):
         new_sent = reply_content.replace(str(word), '_____')
         gap_fill_sents[word] = new_sent
 
-        # dictionary to csv     
-        with open(filename[:-4] + '-' + 'sample-sents.csv', 'w') as f:
-            f.write('sep=; \n')
-            for k, v in gap_fill_sents.items():
-                f.write(k)
-                f.write(';')
-                f.write(v)
-                f.write('\n')
-
     return gap_fill_sents
+
+# def sents_to_csv(filename):
+#     # dictionary to csv
+#     with open(filename[:-4] + '-' + 'sample-sents.csv', 'w') as f:
+#         f.write('sep=; \n')
+#         for k, v in gap_fill_sents.items():
+#             f.write(k)
+#             f.write(';')
+#             f.write(v)
+#             f.write('\n')
 
 
 mydict = gap_fill_sents('financial-crimes.txt')
 print(mydict)
+
 
 # returns n random words to test
 def test_set(mydict, word_number=10):
